@@ -4,6 +4,8 @@ public class ConcreteTreeNode implements TreeNode {
     private final Integer value;
     private TreeNode left;
     private TreeNode right;
+    private TreeNode parent;
+    private int count;
 
     public ConcreteTreeNode(int value) {
         this.value = value;
@@ -12,11 +14,21 @@ public class ConcreteTreeNode implements TreeNode {
     }
 
     public void setLeft(ConcreteTreeNode left) {
+        left.setParent(this);
         this.left = left;
     }
 
     public void setRight(ConcreteTreeNode right) {
+        right.setParent(this);
         this.right = right;
+    }
+
+    @Override
+    public void incrementCount() {
+        count++;
+        if (parent != null) {
+            parent.incrementCount();
+        }
     }
 
     public Integer getValue() {
@@ -32,6 +44,11 @@ public class ConcreteTreeNode implements TreeNode {
     }
 
     @Override
+    public void setParent(TreeNode parent) {
+        this.parent = parent;
+    }
+
+    @Override
     public String toString() {
         return "%d(%s)(%s)"
                 .formatted(value, left.toString(), right.toString());
@@ -41,9 +58,18 @@ public class ConcreteTreeNode implements TreeNode {
         return false;
     }
 
-    private class NullNode implements TreeNode {
-        NullNode() {
+    @Override
+    public int getCount() {
+        return count;
+    }
 
+    private class NullNode implements TreeNode {
+        @Override
+        public void incrementCount() {
+            count++;
+            if (parent != null) {
+                parent.incrementCount();
+            }
         }
 
         @Override
@@ -69,6 +95,16 @@ public class ConcreteTreeNode implements TreeNode {
         @Override
         public TreeNode getRight() {
             return this;
+        }
+
+        @Override
+        public void setParent(TreeNode parent) {
+            //do nowt
+        }
+
+        @Override
+        public int getCount() {
+            return count;
         }
     }
 }

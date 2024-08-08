@@ -31,13 +31,13 @@ class DailyCodingProblem20240806Test {
     @Test
     void turnTreeToString(){
         /*
-         0
-        / \
-       1   0
-      /   / \
-     1   0
-        / \
-       1   1
+         0-5
+        /  \
+       1-2   0-3
+      /     /  \
+     1-1   0-2
+          / \
+        1-1  1-1
 
     0(1(1))(0(0(1)(1))
 
@@ -50,8 +50,7 @@ class DailyCodingProblem20240806Test {
 
     @Test
     void testNoOfUnivalTrees() {
-        DailyCodingProblem20240806 solver = new DailyCodingProblem20240806();
-        solver.isUnivalSubtreeAndIncrementCount(NODE_0);
-        assertThat(solver.getCount()).isEqualTo(5);
+        NODE_0.isUnivalSubtreeAndIncrementCount();
+        assertThat(NODE_0.getCount()).isEqualTo(5);
     }
 }
