@@ -7,23 +7,23 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DailyCodingProblem20240806Test {
-    static final TreeNode NODE_0;
+    static final ConcreteTreeNode NODE_0;
 
     static{
-        TreeNode node3l = new TreeNode(1);
-        TreeNode node3r = new TreeNode(1);
+        ConcreteTreeNode node3l = new ConcreteTreeNode(1);
+        ConcreteTreeNode node3r = new ConcreteTreeNode(1);
 
-        TreeNode node2al = new TreeNode(1);
-        TreeNode node2bl = new TreeNode(0);
+        ConcreteTreeNode node2al = new ConcreteTreeNode(1);
+        ConcreteTreeNode node2bl = new ConcreteTreeNode(0);
         node2bl.setLeft(node3l);
         node2bl.setRight(node3r);
 
-        TreeNode node1al = new TreeNode(1);
+        ConcreteTreeNode node1al = new ConcreteTreeNode(1);
         node1al.setLeft(node2al);
-        TreeNode node1br = new TreeNode(0);
+        ConcreteTreeNode node1br = new ConcreteTreeNode(0);
         node1br.setLeft(node2bl);
 
-        NODE_0 = new TreeNode(0);
+        NODE_0 = new ConcreteTreeNode(0);
         NODE_0.setLeft(node1al);
         NODE_0.setRight(node1br);
     }
@@ -51,6 +51,7 @@ class DailyCodingProblem20240806Test {
     @Test
     void testNoOfUnivalTrees() {
         DailyCodingProblem20240806 solver = new DailyCodingProblem20240806();
-        assertThat(solver.findUnivalSubtrees(NODE_0)).isEqualTo(5);
+        solver.isUnivalSubtreeAndIncrementCount(NODE_0);
+        assertThat(solver.getCount()).isEqualTo(5);
     }
 }
