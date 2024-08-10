@@ -1,7 +1,6 @@
 package katas;
 
 
-
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DailyCodingProblem20240806Test {
     static final ConcreteTreeNode NODE_0;
 
-    static{
+    static {
         ConcreteTreeNode node3l = new ConcreteTreeNode(1);
         ConcreteTreeNode node3r = new ConcreteTreeNode(1);
 
@@ -29,7 +28,7 @@ class DailyCodingProblem20240806Test {
     }
 
     @Test
-    void turnTreeToString(){
+    void turnTreeToString() {
         /*
          0-5
         /  \
@@ -38,6 +37,22 @@ class DailyCodingProblem20240806Test {
      1-1   0-2
           / \
         1-1  1-1
+
+          0
+        /  \
+       1     0
+      /     /
+     1     0
+          / \
+         1   1
+
+  0
+  / \
+ 1   0
+    / \
+   1   0
+  / \
+ 1   1
 
     0(1(1))(0(0(1)(1))
 
@@ -49,8 +64,51 @@ class DailyCodingProblem20240806Test {
     }
 
     @Test
-    void testNoOfUnivalTrees() {
+    void noOfUnivalTrees() {
         NODE_0.isUnivalSubtreeAndIncrementCount();
         assertThat(NODE_0.getCount()).isEqualTo(5);
+    }
+
+    @Test
+    void singleNode() {
+        TreeNode node = new ConcreteTreeNode(7);
+        assertThat(node.isUnivalSubtreeAndIncrementCount()).isTrue();
+        assertThat(node.getCount()).isEqualTo(1);
+    }
+
+    @Test
+    void twoNodesWithEqualValueEmptyOnRight() {
+        TreeNode root = new ConcreteTreeNode(1);
+        TreeNode left = new ConcreteTreeNode(1);
+        root.setLeft(left);
+        assertThat(root.isUnivalSubtreeAndIncrementCount()).isTrue();
+        assertThat(root.getCount()).isEqualTo(2);
+    }
+
+    @Test
+    void twoNodesWithEqualValueEmptyOnLeft() {
+        TreeNode root = new ConcreteTreeNode(1);
+        TreeNode right = new ConcreteTreeNode(1);
+        root.setRight(right);
+        assertThat(root.isUnivalSubtreeAndIncrementCount()).isTrue();
+        assertThat(root.getCount()).isEqualTo(2);
+    }
+
+    @Test
+    void twoNodesWithDifferentValuesEmptyOnRight() {
+        TreeNode root = new ConcreteTreeNode(1);
+        TreeNode left = new ConcreteTreeNode(0);
+        root.setLeft(left);
+        assertThat(root.isUnivalSubtreeAndIncrementCount()).isFalse();
+        assertThat(root.getCount()).isEqualTo(1);
+    }
+
+    @Test
+    void twoNodesWithDifferentValuesEmptyOnLeft() {
+        TreeNode root = new ConcreteTreeNode(1);
+        TreeNode right = new ConcreteTreeNode(0);
+        root.setRight(right);
+        assertThat(root.isUnivalSubtreeAndIncrementCount()).isFalse();
+        assertThat(root.getCount()).isEqualTo(1);
     }
 }

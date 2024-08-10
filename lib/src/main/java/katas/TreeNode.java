@@ -1,6 +1,10 @@
 package katas;
 
 public interface TreeNode {
+    void setLeft(TreeNode left);
+
+    void setRight(TreeNode right);
+
     void incrementCount();
 
     Integer getValue();
@@ -22,9 +26,14 @@ public interface TreeNode {
         boolean isUnivalTreeOnLeft = getLeft().isUnivalSubtreeAndIncrementCount();
         boolean isUnivalTreeOnRight = getRight().isUnivalSubtreeAndIncrementCount();
 
-        if (getValue().equals(getLeft().getValue()) &&
-            getLeft().getValue().equals(getRight().getValue())
-            && isUnivalTreeOnLeft && isUnivalTreeOnRight) {
+        if (getLeft().isEmpty() && isUnivalTreeOnRight && getValue().equals(getRight().getValue()) ||
+            getRight().isEmpty() && isUnivalTreeOnLeft && getValue().equals(getLeft().getValue())) {
+            incrementCount();
+            return true;
+        }
+
+        if (getValue().equals(getLeft().getValue()) && getLeft().getValue().equals(getRight().getValue()) &&
+            isUnivalTreeOnLeft && isUnivalTreeOnRight) {
             incrementCount();
             return true;
         }

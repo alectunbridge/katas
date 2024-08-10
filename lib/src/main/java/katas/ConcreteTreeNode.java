@@ -13,12 +13,14 @@ public class ConcreteTreeNode implements TreeNode {
         right = new NullNode();
     }
 
-    public void setLeft(ConcreteTreeNode left) {
+    @Override
+    public void setLeft(TreeNode left) {
         left.setParent(this);
         this.left = left;
     }
 
-    public void setRight(ConcreteTreeNode right) {
+    @Override
+    public void setRight(TreeNode right) {
         right.setParent(this);
         this.right = right;
     }
@@ -50,8 +52,7 @@ public class ConcreteTreeNode implements TreeNode {
 
     @Override
     public String toString() {
-        return "%d(%s)(%s)"
-                .formatted(value, left.toString(), right.toString());
+        return "%d(%s)(%s)".formatted(value, left.toString(), right.toString());
     }
 
     public boolean isEmpty() {
@@ -64,6 +65,21 @@ public class ConcreteTreeNode implements TreeNode {
     }
 
     private class NullNode implements TreeNode {
+        @Override
+        public boolean isUnivalSubtreeAndIncrementCount() {
+            return false;
+        }
+
+        @Override
+        public void setLeft(TreeNode left) {
+            throw new UnsupportedOperationException("Cannot set children on null node");
+        }
+
+        @Override
+        public void setRight(TreeNode right) {
+            throw new UnsupportedOperationException("Cannot set children on null node");
+        }
+
         @Override
         public void incrementCount() {
             count++;
