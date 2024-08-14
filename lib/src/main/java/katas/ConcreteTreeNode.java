@@ -67,20 +67,6 @@ public class ConcreteTreeNode implements TreeNode {
         return count;
     }
 
-    public boolean isUnivalTreeOnRight() {
-        if (isUnivalTreeOnRight == null) {
-            isUnivalTreeOnRight = getRight().isUnivalSubtreeAndIncrementCount();
-        }
-        return isUnivalTreeOnRight;
-    }
-
-    public boolean isUnivalTreeOnLeft() {
-        if (isUnivalTreeOnLeft == null) {
-            isUnivalTreeOnLeft = getLeft().isUnivalSubtreeAndIncrementCount();
-        }
-        return isUnivalTreeOnLeft;
-    }
-
     private class NullNode implements TreeNode {
         @Override
         public void setLeft(TreeNode left) {
@@ -132,11 +118,8 @@ public class ConcreteTreeNode implements TreeNode {
             return count;
         }
 
-        public boolean isUnivalTreeOnRight() {
-            return false;
-        }
-
-        public boolean isUnivalTreeOnLeft() {
+        @Override
+        public boolean isUnivalSubtreeAndIncrementCount() {
             return false;
         }
     }
