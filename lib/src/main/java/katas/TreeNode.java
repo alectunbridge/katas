@@ -18,26 +18,33 @@ public interface TreeNode {
     void setParent(TreeNode parent);
 
     default boolean isUnivalSubtreeAndIncrementCount() {
-        if (getLeft().isEmpty() && getRight().isEmpty()) {
-            incrementCount();
-            return true;
-        }
-
-        boolean isUnivalTreeOnLeft = getLeft().isUnivalSubtreeAndIncrementCount();
-        boolean isUnivalTreeOnRight = getRight().isUnivalSubtreeAndIncrementCount();
-
-        if (getLeft().isEmpty() && isUnivalTreeOnRight && getValue().equals(getRight().getValue()) ||
-            getRight().isEmpty() && isUnivalTreeOnLeft && getValue().equals(getLeft().getValue())) {
-            incrementCount();
-            return true;
-        }
-
-        if (getValue().equals(getLeft().getValue()) && getLeft().getValue().equals(getRight().getValue()) &&
-            isUnivalTreeOnLeft && isUnivalTreeOnRight) {
-            incrementCount();
-            return true;
+        isUnivalTreeOnLeft();
+        isUnivalTreeOnRight();
+        if (isLeafNode() ||
+            leftOrRightAreEitherEmptyOrUnivalTreesOfSameValue() ||
+            bothLeftAndRightAreUnivalTreesAndHaveSameValue()) {
+                incrementCount();
+                return true;
         }
         return false;
+    }
+
+    boolean isUnivalTreeOnLeft();
+
+    boolean isUnivalTreeOnRight();
+
+    private boolean leftOrRightAreEitherEmptyOrUnivalTreesOfSameValue() {
+        return getLeft().isEmpty() && isUnivalTreeOnRight() && getValue().equals(getRight().getValue()) ||
+               getRight().isEmpty() && isUnivalTreeOnLeft() && getValue().equals(getLeft().getValue());
+    }
+
+    private boolean bothLeftAndRightAreUnivalTreesAndHaveSameValue() {
+        return getValue().equals(getLeft().getValue()) && getLeft().getValue().equals(getRight().getValue())
+               && isUnivalTreeOnLeft() && isUnivalTreeOnRight();
+    }
+
+    private boolean isLeafNode() {
+        return getLeft().isEmpty() && getRight().isEmpty();
     }
 
     int getCount();

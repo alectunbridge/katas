@@ -6,9 +6,12 @@ public class ConcreteTreeNode implements TreeNode {
     private TreeNode right;
     private TreeNode parent;
     private int count;
+    private Boolean isUnivalTreeOnRight;
+    private Boolean isUnivalTreeOnLeft;
 
     public ConcreteTreeNode(int value) {
         this.value = value;
+        parent = new NullNode();
         left = new NullNode();
         right = new NullNode();
     }
@@ -28,7 +31,7 @@ public class ConcreteTreeNode implements TreeNode {
     @Override
     public void incrementCount() {
         count++;
-        if (parent != null) {
+        if (!parent.isEmpty()) {
             parent.incrementCount();
         }
     }
@@ -64,12 +67,21 @@ public class ConcreteTreeNode implements TreeNode {
         return count;
     }
 
-    private class NullNode implements TreeNode {
-        @Override
-        public boolean isUnivalSubtreeAndIncrementCount() {
-            return false;
+    public boolean isUnivalTreeOnRight() {
+        if (isUnivalTreeOnRight == null) {
+            isUnivalTreeOnRight = getRight().isUnivalSubtreeAndIncrementCount();
         }
+        return isUnivalTreeOnRight;
+    }
 
+    public boolean isUnivalTreeOnLeft() {
+        if (isUnivalTreeOnLeft == null) {
+            isUnivalTreeOnLeft = getLeft().isUnivalSubtreeAndIncrementCount();
+        }
+        return isUnivalTreeOnLeft;
+    }
+
+    private class NullNode implements TreeNode {
         @Override
         public void setLeft(TreeNode left) {
             throw new UnsupportedOperationException("Cannot set children on null node");
@@ -82,10 +94,7 @@ public class ConcreteTreeNode implements TreeNode {
 
         @Override
         public void incrementCount() {
-            count++;
-            if (parent != null) {
-                parent.incrementCount();
-            }
+            //do nowt
         }
 
         @Override
@@ -121,6 +130,14 @@ public class ConcreteTreeNode implements TreeNode {
         @Override
         public int getCount() {
             return count;
+        }
+
+        public boolean isUnivalTreeOnRight() {
+            return false;
+        }
+
+        public boolean isUnivalTreeOnLeft() {
+            return false;
         }
     }
 }

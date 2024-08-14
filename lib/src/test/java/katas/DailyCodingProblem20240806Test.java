@@ -30,9 +30,9 @@ class DailyCodingProblem20240806Test {
     @Test
     void turnTreeToString() {
         /*
-         0-5
+         0-4
         /  \
-       1-2   0-3
+       1-2   0-2
       /     /  \
      1-1   0-2
           / \
@@ -66,7 +66,7 @@ class DailyCodingProblem20240806Test {
     @Test
     void noOfUnivalTrees() {
         NODE_0.isUnivalSubtreeAndIncrementCount();
-        assertThat(NODE_0.getCount()).isEqualTo(5);
+        assertThat(NODE_0.getCount()).isEqualTo(4);
     }
 
     @Test
