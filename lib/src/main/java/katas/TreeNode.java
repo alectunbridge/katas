@@ -3,7 +3,7 @@ package katas;
 import java.util.Optional;
 
 public class TreeNode {
-    protected final Integer value;
+    protected final int value;
     protected Optional<TreeNode> left;
     protected Optional<TreeNode> right;
     protected Optional<TreeNode> parent;
@@ -26,7 +26,7 @@ public class TreeNode {
         this.right = Optional.of(right);
     }
 
-    public Integer getValue() {
+    public int getValue() {
         return value;
     }
 
@@ -42,8 +42,8 @@ public class TreeNode {
     public boolean isUnivalSubtreeAndIncrementCount() {
         boolean isUnivalOnLeft = left.map(TreeNode::isUnivalSubtreeAndIncrementCount).orElse(false);
         boolean isUnivalOnRight = right.map(TreeNode::isUnivalSubtreeAndIncrementCount).orElse(false);
-        if ((left.isEmpty() || isUnivalOnLeft && getValue().equals(left.map(TreeNode::getValue).orElse(null))) &&
-            (right.isEmpty() || isUnivalOnRight && getValue().equals(right.map(TreeNode::getValue).orElse(null)))) {
+        if ((left.isEmpty() || isUnivalOnLeft && value == left.get().getValue()) &&
+            (right.isEmpty() || isUnivalOnRight && value == right.get().getValue())) {
             incrementCount();
             return true;
         }
