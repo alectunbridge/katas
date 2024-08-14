@@ -1,32 +1,59 @@
 package katas;
 
-public interface TreeNode {
-    void setLeft(TreeNode left);
+import java.util.Optional;
 
-    void setRight(TreeNode right);
+public class TreeNode {
+    protected final Integer value;
+    protected Optional<TreeNode> left;
+    protected Optional<TreeNode> right;
+    protected Optional<TreeNode> parent;
+    private int count;
 
-    void incrementCount();
+    public TreeNode(int value) {
+        this.value = value;
+        left = Optional.empty();
+        right = Optional.empty();
+        parent = Optional.empty();
+    }
 
-    Integer getValue();
+    public void setLeft(TreeNode left) {
+        left.parent = Optional.of(this);
+        this.left = Optional.of(left);
+    }
 
-    boolean isEmpty();
+    public void setRight(TreeNode right) {
+        right.parent = Optional.of(this);
+        this.right = Optional.of(right);
+    }
 
-    TreeNode getLeft();
+    public Integer getValue() {
+        return value;
+    }
 
-    TreeNode getRight();
+    public int getCount() {
+        return count;
+    }
 
-    void setParent(TreeNode parent);
+    public void incrementCount() {
+        count++;
+        parent.ifPresent(TreeNode::incrementCount);
+    }
 
-    default boolean isUnivalSubtreeAndIncrementCount() {
-        boolean isUnivalOnLeft = getLeft().isUnivalSubtreeAndIncrementCount();
-        boolean isUnivalOnRight = getRight().isUnivalSubtreeAndIncrementCount();
-        if ((getLeft().isEmpty() || isUnivalOnLeft && getValue().equals(getLeft().getValue())) &&
-            (getRight().isEmpty() || isUnivalOnRight && getValue().equals(getRight().getValue()))) {
+    public boolean isUnivalSubtreeAndIncrementCount() {
+        boolean isUnivalOnLeft = left.map(TreeNode::isUnivalSubtreeAndIncrementCount).orElse(false);
+        boolean isUnivalOnRight = right.map(TreeNode::isUnivalSubtreeAndIncrementCount).orElse(false);
+        if ((left.isEmpty() || isUnivalOnLeft && getValue().equals(left.map(TreeNode::getValue).orElse(null))) &&
+            (right.isEmpty() || isUnivalOnRight && getValue().equals(right.map(TreeNode::getValue).orElse(null)))) {
             incrementCount();
             return true;
         }
         return false;
     }
 
-    int getCount();
+    @Override
+    public String toString() {
+        return "%d(%s)(%s)".formatted(value,
+                left.map(node -> String.valueOf(node.toString())).orElse(""),
+                right.map(node -> String.valueOf(node.toString())).orElse(""));
+    }
 }
