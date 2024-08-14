@@ -6,8 +6,6 @@ public class ConcreteTreeNode implements TreeNode {
     private TreeNode right;
     private TreeNode parent;
     private int count;
-    private Boolean isUnivalTreeOnRight;
-    private Boolean isUnivalTreeOnLeft;
 
     public ConcreteTreeNode(int value) {
         this.value = value;
